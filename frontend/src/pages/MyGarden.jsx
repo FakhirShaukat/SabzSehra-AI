@@ -272,7 +272,7 @@ const MyGarden = () => {
             const formData = new FormData()
             formData.append('image', selectedImage)
 
-            const response = await fetch('http://localhost:5000/api/identify', {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/identify`, {
                 method: 'POST',
                 body: formData
             })
