@@ -70,7 +70,7 @@ const Dashboard = () => {
                         Welcome!
                     </h1>
 
-                    <p className="text-gray-500 mt-3 text-sm sm:text-base max-w-2xl leading-relaxed">
+                    <p className="text-gray-500 mt-3 text-xs sm:text-base max-w-2xl leading-relaxed">
                         Explore the fascinating world of succulent plants. Learn about their unique characteristics, growing environments, and care requirements.
                     </p>
                 </div>
@@ -134,7 +134,7 @@ const Dashboard = () => {
                                         {plant.scientificName}
                                     </p>
 
-                                    <p className="text-sm text-gray-600 leading-relaxed mt-4">
+                                    <p className="text-xs text-gray-600 leading-relaxed mt-4">
                                         {plant.description}
                                     </p>
 
@@ -149,7 +149,7 @@ const Dashboard = () => {
                                             {plant.characteristics.map((item) => (
                                                 <li
                                                     key={item}
-                                                    className="flex items-start gap-2 text-sm text-gray-500"
+                                                    className="flex items-start gap-2 text-xs text-gray-500"
                                                 >
                                                     <Leaf
                                                         size={15}
@@ -196,7 +196,7 @@ const Dashboard = () => {
                                 Nature's Own Plant Propagation
                             </h2>
 
-                            <p className="text-gray-500 text-sm leading-relaxed mt-4">
+                            <p className="text-gray-500 text-xs leading-relaxed mt-4">
                                 Bryophyllum pinnatum is particularly interesting because it can produce tiny plantlets along the edges of its leaves. These plantlets can develop roots and grow into new plants.
                             </p>
 

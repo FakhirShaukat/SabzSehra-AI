@@ -557,7 +557,7 @@ const Explore = () => {
                         Explore Plant World
                     </h1>
 
-                    <p className="text-gray-500 text-sm sm:text-base mt-3 max-w-2xl leading-relaxed">
+                    <p className="text-gray-500 text-xs sm:text-base mt-3 max-w-2xl leading-relaxed">
                         Discover the characteristics, uses, benefits, survival adaptations, and care requirements of succulent plants in your collection.
                     </p>
                 </div>
@@ -581,7 +581,7 @@ const Explore = () => {
                                 rounded-xl py-3 pl-11 pr-4
                                 text-sm outline-none
                                 focus:ring-2 focus:ring-green-600/20
-                                focus:border-green-600
+                                focus:border-green-600 text-xs
                             "
                         />
                     </div>

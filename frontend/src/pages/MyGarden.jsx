@@ -15,142 +15,29 @@ const plants = [
         image: assets.aloeVera,
         description: 'Aloe Vera is a popular succulent known for its thick, fleshy leaves containing a soothing gel. It is commonly used in skincare and can thrive in dry conditions.'
     },
-    {
-        name: 'Echeveria',
-        scientificName: 'Echeveria species',
-        category: 'Rosette',
-        image: assets.echeveria,
-        description: 'Echeveria is a beautiful rosette-shaped succulent with colorful, fleshy leaves. It comes in shades of green, pink, purple and blue.'
-    },
-    {
-        name: 'Jade Plant',
-        scientificName: 'Crassula ovata',
-        category: 'Indoor Succulent',
-        image: assets.jadePlant,
-        description: 'The Jade Plant is a popular houseplant with thick woody stems and oval-shaped green leaves. It is easy to maintain and is often associated with good fortune.'
-    },
-    {
-        name: 'Haworthia',
-        scientificName: 'Haworthia species',
-        category: 'Small Succulent',
-        image: assets.havorthiaPlant,
-        description: 'Haworthia is a compact succulent with pointed leaves and distinctive white stripes or patterns. It grows well indoors with indirect sunlight.'
-    },
-    {
-        name: 'Sempervivum',
-        scientificName: 'Sempervivum species',
-        category: 'Hardy Succulent',
-        image: assets.sempervivum,
-        description: 'Also known as Hens and Chicks, Sempervivum forms attractive clusters of rosette-shaped leaves.'
-    },
-    {
-        name: 'Sedum',
-        scientificName: 'Sedum species',
-        category: 'Ground Cover',
-        image: assets.sedum,
-        description: 'Sedum is a diverse group of succulents with fleshy leaves. Many varieties grow close to the ground and are excellent for rock gardens.'
-    },
-    {
-        name: 'Kalanchoe',
-        scientificName: 'Kalanchoe species',
-        category: 'Flowering Succulent',
-        image: assets.kalanchoe,
-        description: 'Kalanchoe is a flowering succulent with thick leaves and clusters of colorful flowers. It is popular for indoor decoration.'
-    },
-    {
-        name: 'Agave',
-        scientificName: 'Agave species',
-        category: 'Desert Succulent',
-        image: assets.agavePlant,
-        description: 'Agave features large, thick leaves arranged in striking rosettes, often with sharp edges. It is well adapted to hot and dry environments.'
-    },
-    {
-        name: 'Gasteria',
-        scientificName: 'Gasteria species',
-        category: 'Indoor Succulent',
-        image: assets.gasteria,
-        description: 'Gasteria is recognized by its thick, tongue-shaped leaves, often covered in attractive spots. It prefers bright indirect light.'
-    },
-    {
-        name: 'String of Pearls',
-        scientificName: 'Curio rowleyanus',
-        category: 'Trailing Succulent',
-        image: assets.stringOfPearls,
-        description: 'This unique trailing succulent has small, round, bead-like leaves that resemble a string of pearls. It looks beautiful in hanging pots.'
-    },
-    {
-        name: 'Burro’s Tail',
-        scientificName: 'Sedum morganianum',
-        category: 'Trailing Succulent',
-        image: assets.burrosTail,
-        description: 'Burro’s Tail has long trailing stems covered with plump, overlapping leaves. It is a beautiful hanging plant that needs careful handling.'
-    },
-    {
-        name: 'Panda Plant',
-        scientificName: 'Kalanchoe tomentosa',
-        category: 'Fuzzy Succulent',
-        image: assets.pandaPlant,
-        description: 'The Panda Plant has soft, fuzzy leaves with brown markings around the edges. It is a distinctive succulent that enjoys bright light.'
-    },
-    {
-        name: 'Lithops',
-        scientificName: 'Lithops species',
-        category: 'Living Stones',
-        image: assets.lithops,
-        description: 'Lithops are tiny succulents that resemble small stones. Their unusual appearance helps them blend into their natural desert surroundings.'
-    },
-    {
-        name: 'Aeonium',
-        scientificName: 'Aeonium species',
-        category: 'Rosette',
-        image: assets.aeonium,
-        description: 'Aeonium develops attractive rosettes of leaves at the ends of branching stems. Some varieties have dark purple or burgundy foliage.'
-    },
-    {
-        name: 'Crassula',
-        scientificName: 'Crassula species',
-        category: 'Indoor Succulent',
-        image: assets.crassula,
-        description: 'Crassula is a large succulent genus that includes the popular Jade Plant. Its varieties feature interesting leaf shapes and growth patterns.'
-    },
-    {
-        name: 'Graptopetalum',
-        scientificName: 'Graptopetalum species',
-        category: 'Rosette',
-        image: assets.graptopetalum,
-        description: 'Graptopetalum is known for its powdery, pastel-colored leaves arranged in loose rosettes.'
-    },
-    {
-        name: 'Graptoveria',
-        scientificName: 'Graptoveria hybrids',
-        category: 'Hybrid Succulent',
-        image: assets.graptoveria,
-        description: 'Graptoveria is a hybrid succulent combining features of Graptopetalum and Echeveria. It produces beautiful compact rosettes.'
-    },
-    {
-        name: 'Pachyphytum',
-        scientificName: 'Pachyphytum species',
-        category: 'Fleshy Leaves',
-        image: assets.pachyphytum,
-        description: 'Pachyphytum has thick, rounded leaves with a powdery coating. Its unusual appearance makes it a favorite among succulent collectors.'
-    },
+
     {
         name: 'Euphorbia',
-        scientificName: 'Euphorbia species',
+        scientificName: 'Euphorbia milii',
         category: 'Desert Succulent',
         image: assets.euphorbia,
         description: 'Some Euphorbia species have thick, water-storing stems and unusual architectural shapes. Many are adapted to dry climates.'
     },
     {
-        name: 'Cotyledon',
-        scientificName: 'Cotyledon species',
-        category: 'Fleshy Leaves',
-        image: assets.cotyledon,
-        description: 'Cotyledon plants feature thick, often rounded leaves and sometimes bell-shaped flowers. They are suitable for sunny succulent gardens.'
+        name: 'Bryophyllum pinnatum',
+        scientificName: 'Kalanchoe pinnata',
+        category: 'Leaf Succulent',
+        image: assets.bryophyllumPinnatum,
+        description: 'Bryophyllum pinnatum is a distinctive succulent known for producing small plantlets along the edges of its leaves.'
     }
 ]
 
 const MyGarden = () => {
+
+    const API_BASE_URL = (
+        import.meta.env.VITE_API_URL || ''
+    ).replace(/\/+$/, '')
+
     const [selectedPlant, setSelectedPlant] = useState(null)
     const [selectedImage, setSelectedImage] = useState(null)
     const [imagePreview, setImagePreview] = useState(null)
@@ -197,8 +84,8 @@ const MyGarden = () => {
             return
         }
 
-        if (file.size > 10 * 1024 * 1024) {
-            setIdentificationError('Image must be smaller than 10 MB.')
+        if (file.size > 4 * 1024 * 1024) {
+            setIdentificationError('Image must be smaller than 4 MB.')
             e.target.value = ''
             return
         }
@@ -272,7 +159,7 @@ const MyGarden = () => {
             const formData = new FormData()
             formData.append('image', selectedImage)
 
-            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/identify`, {
+            const response = await fetch(`${API_BASE_URL}/api/identify`, {
                 method: 'POST',
                 body: formData
             })
@@ -318,7 +205,7 @@ const MyGarden = () => {
                             My Garden
                         </h1>
 
-                        <p className="text-gray-500 text-sm mt-2 leading-relaxed max-w-xl">
+                        <p className="text-gray-500 text-xs mt-2 leading-relaxed max-w-xl">
                             Explore succulent varieties or identify a plant using its picture.
                         </p>
                     </div>
@@ -328,7 +215,7 @@ const MyGarden = () => {
 
                         <button
                             onClick={() => cameraRef.current?.click()}
-                            className="flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium transition shadow-sm min-h-12"
+                            className="flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-2  py-3 rounded-xl text-xs font-medium transition shadow-sm "
                         >
                             <Camera size={18} />
                             Take Photo
@@ -336,7 +223,7 @@ const MyGarden = () => {
 
                         <button
                             onClick={() => uploadRef.current?.click()}
-                            className="flex items-center justify-center gap-2 border border-green-700 text-green-700 hover:bg-green-50 px-3 sm:px-4 py-3 rounded-xl text-xs sm:text-sm font-medium transition min-h-12"
+                            className="flex items-center justify-center gap-2 border border-green-700 text-green-700 hover:bg-green-50 px-2 py-3 rounded-xl text-xs font-medium transition"
                         >
                             <Upload size={18} />
                             Upload Image
@@ -445,7 +332,7 @@ const MyGarden = () => {
 
                             <div className="min-w-0">
                                 <span className="text-xs font-semibold text-green-700 uppercase tracking-wider">
-                                    PlantNet Results
+                                    PlantNet Identification
                                 </span>
 
                                 <h2 className="text-lg sm:text-2xl font-bold text-[#20372a] mt-1">
@@ -461,63 +348,119 @@ const MyGarden = () => {
 
                         {identification.results?.length > 0 ? (
                             <>
-                                {/* Best Prediction */}
-                                {(() => {
-                                    const bestResult = identification.results[0]
-                                    const matchedPlant = findGardenPlant(bestResult)
+                                {identification.plant ? (
+                                    <>
+                                        {(() => {
+                                            const plant = identification.plant
+                                            const matchedPlant = findGardenPlant(plant)
 
-                                    return (
-                                        <div className="bg-[#f5f7f2] rounded-xl p-4 sm:p-5 mb-6">
+                                            return (
+                                                <div className="space-y-6">
 
-                                            <p className="text-xs font-semibold text-gray-500 uppercase tracking-wide">
-                                                Best Prediction
-                                            </p>
+                                                    {/* Identified Plant */}
+                                                    <div className="bg-[#f5f7f2] rounded-xl p-4 sm:p-6">
 
-                                            <h3 className="text-lg sm:text-xl font-bold text-[#20372a] mt-2 break-words">
-                                                {bestResult.scientificName}
-                                            </h3>
+                                                        <div className="flex items-center gap-2 mb-4">
+                                                            <Sprout className="text-green-700" size={22} />
 
-                                            {bestResult.commonNames?.length > 0 && (
-                                                <p className="text-sm text-gray-500 mt-1">
-                                                    {bestResult.commonNames.join(', ')}
-                                                </p>
-                                            )}
+                                                            <span className="text-xs font-semibold text-green-800 uppercase tracking-wide">
+                                                                Plant Identified
+                                                            </span>
+                                                        </div>
 
-                                            <div className="flex flex-wrap items-center gap-2 sm:gap-3 mt-4">
+                                                        <h3 className="text-xl sm:text-2xl font-bold text-[#20372a] break-words">
+                                                            {plant.name}
+                                                        </h3>
 
-                                                <span className="bg-green-100 text-green-800 text-xs font-semibold px-3 py-2 rounded-lg">
-                                                    {(bestResult.confidence * 100).toFixed(2)}% confidence
-                                                </span>
+                                                        <p className="text-sm text-gray-500 italic mt-2 break-words">
+                                                            {plant.scientificName}
+                                                        </p>
 
-                                                <span className="bg-white text-gray-600 text-xs px-3 py-2 rounded-lg break-words">
-                                                    Family: {bestResult.family}
-                                                </span>
+                                                        {plant.description && (
+                                                            <p className="text-sm text-gray-600 leading-relaxed mt-4">
+                                                                {plant.description}
+                                                            </p>
+                                                        )}
 
-                                            </div>
+                                                        {matchedPlant && (
+                                                            <button
+                                                                onClick={() => setSelectedPlant(matchedPlant)}
+                                                                className="mt-5 w-full sm:w-auto flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-3 rounded-lg text-sm font-medium transition"
+                                                            >
+                                                                View Plant Details
+                                                                <ArrowRight size={16} />
+                                                            </button>
+                                                        )}
 
-                                            {matchedPlant ? (
-                                                <button
-                                                    onClick={() => setSelectedPlant(matchedPlant)}
-                                                    className="mt-5 w-full sm:w-auto flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-3 rounded-lg text-sm font-medium transition"
-                                                >
-                                                    View Plant Details
-                                                    <ArrowRight size={16} />
-                                                </button>
-                                            ) : (
-                                                <p className="text-xs text-gray-500 mt-4">
-                                                    This prediction is not currently in your garden collection.
-                                                </p>
-                                            )}
+                                                    </div>
 
-                                            {bestResult.confidence < 0.3 && (
-                                                <p className="text-xs text-amber-700 mt-4 leading-relaxed">
-                                                    Low confidence: PlantNet is uncertain about this identification. Try another photo showing clear leaves, flowers, or the plant's overall structure.
-                                                </p>
-                                            )}
+                                                    {/* Uses */}
+                                                    <div className="border border-gray-100 rounded-xl p-4 sm:p-5">
 
-                                        </div>
-                                    )
-                                })()}
+                                                        <h3 className="font-bold text-[#20372a] text-lg mb-4">
+                                                            Uses
+                                                        </h3>
+
+                                                        {plant.uses?.length > 0 ? (
+                                                            <ul className="space-y-3">
+                                                                {plant.uses.map((use, index) => (
+                                                                    <li
+                                                                        key={index}
+                                                                        className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed"
+                                                                    >
+                                                                        <span className="mt-1.5 w-2 h-2 rounded-full bg-green-600 shrink-0" />
+                                                                        {use}
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        ) : (
+                                                            <p className="text-sm text-gray-500">
+                                                                Uses information is currently unavailable.
+                                                            </p>
+                                                        )}
+
+                                                    </div>
+
+                                                    {/* Benefits */}
+                                                    <div className="border border-gray-100 rounded-xl p-4 sm:p-5">
+
+                                                        <h3 className="font-bold text-[#20372a] text-lg mb-4">
+                                                            Benefits
+                                                        </h3>
+
+                                                        {plant.benefits?.length > 0 ? (
+                                                            <ul className="space-y-3">
+                                                                {plant.benefits.map((benefit, index) => (
+                                                                    <li
+                                                                        key={index}
+                                                                        className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed"
+                                                                    >
+                                                                        <span className="mt-1.5 w-2 h-2 rounded-full bg-green-600 shrink-0" />
+                                                                        {benefit}
+                                                                    </li>
+                                                                ))}
+                                                            </ul>
+                                                        ) : (
+                                                            <p className="text-sm text-gray-500">
+                                                                Benefits information is currently unavailable.
+                                                            </p>
+                                                        )}
+
+                                                    </div>
+
+                                                    <p className="text-xs text-gray-400 leading-relaxed">
+                                                        Plant identification is AI-assisted and may not always be accurate. Verify the plant before using it for consumption or medicinal purposes.
+                                                    </p>
+
+                                                </div>
+                                            )
+                                        })()}
+                                    </>
+                                ) : (
+                                    <p className="text-sm text-gray-500">
+                                        No identification results were returned. Try another image.
+                                    </p>
+                                )}
 
                                 {/* Alternative Predictions */}
                                 <h3 className="font-semibold text-[#20372a] mb-4">
@@ -588,21 +531,6 @@ const MyGarden = () => {
                 {/* Plant Collection */}
                 <div className="mb-10">
 
-                    {/* Search Bar */}
-                    <div className="relative mb-6">
-                        <Search
-                            size={19}
-                            className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-                        />
-
-                        <input
-                            type="text"
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            placeholder="Search succulent plants..."
-                            className="w-full min-w-0 bg-white border border-gray-200 rounded-xl py-3 pl-12 pr-4 text-sm outline-none focus:border-green-600 transition"
-                        />
-                    </div>
 
                     {/* Plant Cards */}
                     <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-3 sm:gap-4">
@@ -688,7 +616,7 @@ const MyGarden = () => {
                         </div>
 
                         {/* Plant Information */}
-                        <div className="p-5 sm:p-8">
+                        <div className="p-4 sm:p-8 mb-7">
 
                             <span className="inline-block text-xs font-semibold text-green-800 bg-green-100 px-3 py-1.5 rounded-full">
                                 {selectedPlant.category}
@@ -696,7 +624,7 @@ const MyGarden = () => {
 
                             <h2
                                 id="plant-modal-title"
-                                className="text-2xl sm:text-3xl font-bold text-[#20372a] mt-4 break-words"
+                                className="text-xs font-bold text-[#20372a] mt-4 break-words"
                             >
                                 {selectedPlant.name}
                             </h2>
@@ -707,16 +635,10 @@ const MyGarden = () => {
 
                             <div className="w-12 h-1 bg-green-600 rounded-full my-5" />
 
-                            <p className="text-gray-600 text-sm sm:text-base leading-relaxed">
+                            <p className="text-gray-600 text-xs leading-relaxed">
                                 {selectedPlant.description}
                             </p>
 
-                            <button
-                                onClick={() => setSelectedPlant(null)}
-                                className="w-full mt-7 bg-green-700 hover:bg-green-800 text-white py-3 rounded-xl text-sm font-semibold transition min-h-12"
-                            >
-                                Close Details
-                            </button>
 
                         </div>
                     </div>

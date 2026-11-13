@@ -6,8 +6,8 @@ import { Crown, UserRound, Sprout } from 'lucide-react'
 const Profile = () => {
     const members = [
         { name: 'Aliza Shaukat', role: 'Group Leader', icon: Crown },
-        { name: 'Hania', role: 'Group Member', icon: UserRound },
-        { name: 'Batool', role: 'Group Member', icon: UserRound },
+        { name: 'Haya Javed', role: 'Group Member', icon: UserRound },
+        { name: 'Sakina Fatima', role: 'Group Member', icon: UserRound },
     ]
 
     return (
@@ -28,7 +28,7 @@ const Profile = () => {
                         Team Behind Project
                     </h1>
 
-                    <p className="text-gray-500 mt-2 text-sm sm:text-base">
+                    <p className="text-gray-500 mt-2 text-xs sm:text-base">
                         Get to know our dedicated members.
                     </p>
                 </div>
@@ -112,6 +112,7 @@ const Profile = () => {
                         sm:grid-cols-2
                         lg:grid-cols-3
                         gap-3 sm:gap-5
+                         mb-20
                     ">
 
                         {members.map((member, index) => {
@@ -161,17 +162,6 @@ const Profile = () => {
                                     `}>
                                         {member.role}
                                     </p>
-
-                                    {index === 0 && (
-                                        <span className="
-                                            inline-block mt-4
-                                            text-xs font-medium
-                                            bg-green-100 text-green-800
-                                            px-3 py-1.5 rounded-full
-                                        ">
-                                            Team Lead
-                                        </span>
-                                    )}
 
                                 </div>
                             )
