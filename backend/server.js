@@ -18,8 +18,15 @@ const ai = new GoogleGenAI({
 const app = express()
 const PORT = process.env.PORT || 5000
 
+const frontendOrigin = (
+    process.env.FRONTEND_URL || 'http://localhost:5173'
+).replace(/\/+$/, '')
+
 app.use(cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:5173'
+    origin: frontendOrigin,
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    optionsSuccessStatus: 204
 }))
 
 
@@ -138,7 +145,7 @@ const storage = multer.memoryStorage()
 
 const upload = multer({
     storage,
-    limits: { fileSize: 10 * 1024 * 1024 },
+    limits: { fileSize: 4 * 1024 * 1024 },
     fileFilter: (req, file, callback) => {
         const allowedTypes = ['image/jpeg', 'image/png']
 
@@ -157,13 +164,20 @@ app.get('/', (req, res) => {
 app.post('/api/identify', upload.single('image'), async (req, res) => {
     try {
         if (!process.env.PLANTNET_API_KEY) {
-            return res.status(500).json({ message: 'PlantNet API key is not configured.' })
+            return res.status(500).json({
+                success: false,
+                message: 'PlantNet API key is not configured.'
+            })
         }
 
         if (!req.file) {
-            return res.status(400).json({ message: 'Please upload a plant image.' })
+            return res.status(400).json({
+                success: false,
+                message: 'Please upload a plant image.'
+            })
         }
 
+        // STEP 1: Identify the plant using PlantNet
         const formData = new FormData()
 
         formData.append('images', req.file.buffer, {
@@ -173,43 +187,145 @@ app.post('/api/identify', upload.single('image'), async (req, res) => {
 
         formData.append('organs', 'auto')
 
-        const response = await axios.post(
-            `https://my-api.plantnet.org/v2/identify/all?api-key=${encodeURIComponent(process.env.PLANTNET_API_KEY)}&lang=en`,
+        const plantNetResponse = await axios.post(
+            `https://my-api.plantnet.org/v2/identify/all?api-key=${encodeURIComponent(process.env.PLANTNET_API_KEY)}&lang=en&nb-results=1`,
             formData,
             {
                 headers: {
                     ...formData.getHeaders()
                 },
+                timeout: 60000,
                 maxBodyLength: Infinity,
-                maxContentLength: Infinity,
-                timeout: 60000
+                maxContentLength: Infinity
             }
         )
 
-        const results = (response.data.results || []).map((item) => ({
-            scientificName: item.species?.scientificNameWithoutAuthor || item.species?.scientificName || 'Unknown',
-            commonNames: item.species?.commonNames || [],
-            family: item.species?.family?.scientificName || 'Unknown',
-            confidence: item.score
-        }))
+        const bestResult = plantNetResponse.data.results?.[0]
 
-        res.json({
+        if (!bestResult?.species) {
+            return res.status(404).json({
+                success: false,
+                message: 'No plant could be identified. Please try another clear image.'
+            })
+        }
+
+        const scientificName =
+            bestResult.species.scientificNameWithoutAuthor ||
+            bestResult.species.scientificName ||
+            'Unknown'
+
+        const commonNames = bestResult.species.commonNames || []
+
+        const family =
+            bestResult.species.family?.scientificName || 'Unknown'
+
+        // STEP 2: Generate plant information using Gemini
+        const prompt = `
+You are a professional botanical information assistant.
+
+A plant identification service has identified the uploaded plant as:
+
+Scientific name: ${scientificName}
+Possible common names: ${commonNames.join(', ') || 'Not available'}
+Plant family: ${family}
+
+Generate a simple and informative profile for this plant.
+
+Return ONLY valid JSON using this exact structure:
+
+{
+    "name": "Most widely recognized common name",
+    "scientificName": "${scientificName}",
+    "uses": [
+        "Use 1",
+        "Use 2",
+        "Use 3"
+    ],
+    "benefits": [
+        "Benefit 1",
+        "Benefit 2",
+        "Benefit 3"
+    ],
+    "description": "A short, simple description of the plant."
+}
+
+IMPORTANT RULES:
+- Use the scientific name to identify the correct species.
+- Prefer a recognized common name. If no reliable common name exists, use the scientific name.
+- Include only uses that are genuinely associated with this species.
+- Do not invent medicinal properties or claim that the plant cures diseases.
+- Distinguish traditional uses from scientifically established benefits.
+- If a use or benefit is uncertain, do not include it.
+- Mention ornamental, environmental, culinary or other relevant uses where appropriate.
+- Keep each use and benefit short and understandable.
+- Return 3 to 5 uses and 3 to 5 benefits when reliable information is available.
+- Do not include confidence scores, predictions, alternative plants or technical identification details.
+- Return JSON only. Do not use Markdown code fences.
+`
+
+        const interaction = await ai.interactions.create({
+            model: 'gemini-3.5-flash-lite',
+            input: prompt,
+            system_instruction:
+                'You provide accurate, cautious and easy-to-understand botanical information. Never invent plant uses or health claims.',
+            generation_config: {
+                temperature: 0.2,
+                max_output_tokens: 1000
+            }
+        })
+
+        const generatedText = interaction.output_text || ''
+
+        let plantInfo
+
+        try {
+            const cleanedText = generatedText
+                .replace(/```json/gi, '')
+                .replace(/```/g, '')
+                .trim()
+
+            plantInfo = JSON.parse(cleanedText)
+        } catch (parseError) {
+            console.error('Gemini JSON parsing error:', parseError)
+
+            // Fallback if Gemini does not return valid JSON
+            plantInfo = {
+                name: commonNames[0] || scientificName,
+                scientificName,
+                uses: [],
+                benefits: [],
+                description: 'Information could not be generated at this time.'
+            }
+        }
+
+        // Keep reliable identification data from PlantNet
+        // for matching against the user's existing garden collection.
+        const plant = {
+            name: plantInfo.name || commonNames[0] || scientificName,
+            scientificName,
+            commonNames,
+            family,
+            uses: Array.isArray(plantInfo.uses) ? plantInfo.uses : [],
+            benefits: Array.isArray(plantInfo.benefits)
+                ? plantInfo.benefits
+                : [],
+            description: plantInfo.description || ''
+        }
+
+        return res.json({
             success: true,
-            bestMatch: response.data.bestMatch || null,
-            results,
-            remainingRequests: response.data.remainingIdentificationRequests ?? null
+            plant
         })
 
     } catch (error) {
-        console.error('Plant identification error:', error.response?.data || error.message)
+        console.error(
+            'Plant identification error:',
+            error.response?.data || error.message
+        )
 
-        console.error('Plant identification error:', error.message)
-        console.error('Status:', error.response?.status)
-        console.error('Response:', error.response?.data)
-
-        res.status(error.response?.status || 500).json({
+        return res.status(error.response?.status || 500).json({
             success: false,
-            message: error.message,
+            message: 'Unable to identify this plant. Please try another image.',
             details: error.response?.data || null
         })
     }
@@ -219,7 +335,7 @@ app.use((error, req, res, next) => {
     if (error instanceof multer.MulterError) {
         return res.status(400).json({
             message: error.code === 'LIMIT_FILE_SIZE'
-                ? 'Image must be smaller than 10 MB.'
+                ? 'Image must be smaller than 4 MB.'
                 : error.message
         })
     }
@@ -227,6 +343,12 @@ app.use((error, req, res, next) => {
     res.status(400).json({ message: error.message || 'Something went wrong.' })
 })
 
-app.listen(PORT, () => {
-    console.log(`GreeHeal AI backend running at http://localhost:${PORT}`)
-})
+// Local development server
+if (!process.env.VERCEL) {
+    app.listen(PORT, () => {
+        console.log(`GreeHeal AI backend running at http://localhost:${PORT}`)
+    })
+}
+
+// Export Express app for Vercel
+export default app
