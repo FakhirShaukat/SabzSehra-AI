@@ -324,15 +324,17 @@ const MyGarden = () => {
                     </div>
                 )}
 
+
                 {/* Identification Results */}
                 {identification && (
                     <div className="bg-white rounded-2xl border border-green-100 shadow-sm p-4 sm:p-7 mb-8">
 
+                        {/* Header */}
                         <div className="flex items-center justify-between gap-3 mb-6">
 
                             <div className="min-w-0">
                                 <span className="text-xs font-semibold text-green-700 uppercase tracking-wider">
-                                    PlantNet Identification
+                                    Plant Identification
                                 </span>
 
                                 <h2 className="text-lg sm:text-2xl font-bold text-[#20372a] mt-1">
@@ -346,175 +348,123 @@ const MyGarden = () => {
 
                         </div>
 
-                        {identification.results?.length > 0 ? (
-                            <>
-                                {identification.plant ? (
-                                    <>
-                                        {(() => {
-                                            const plant = identification.plant
-                                            const matchedPlant = findGardenPlant(plant)
+                        {/* Identified Plant */}
+                        {identification.plant ? (
+                            <div className="space-y-6">
 
-                                            return (
-                                                <div className="space-y-6">
+                                {(() => {
+                                    const plant = identification.plant
+                                    const matchedPlant = findGardenPlant(plant)
 
-                                                    {/* Identified Plant */}
-                                                    <div className="bg-[#f5f7f2] rounded-xl p-4 sm:p-6">
+                                    return (
+                                        <>
+                                            {/* Plant Information */}
+                                            <div className="bg-[#f5f7f2] rounded-xl p-4 sm:p-6">
 
-                                                        <div className="flex items-center gap-2 mb-4">
-                                                            <Sprout className="text-green-700" size={22} />
+                                                <div className="flex items-center gap-2 mb-4">
+                                                    <Sprout className="text-green-700" size={22} />
 
-                                                            <span className="text-xs font-semibold text-green-800 uppercase tracking-wide">
-                                                                Plant Identified
-                                                            </span>
-                                                        </div>
-
-                                                        <h3 className="text-xl sm:text-2xl font-bold text-[#20372a] break-words">
-                                                            {plant.name}
-                                                        </h3>
-
-                                                        <p className="text-sm text-gray-500 italic mt-2 break-words">
-                                                            {plant.scientificName}
-                                                        </p>
-
-                                                        {plant.description && (
-                                                            <p className="text-sm text-gray-600 leading-relaxed mt-4">
-                                                                {plant.description}
-                                                            </p>
-                                                        )}
-
-                                                        {matchedPlant && (
-                                                            <button
-                                                                onClick={() => setSelectedPlant(matchedPlant)}
-                                                                className="mt-5 w-full sm:w-auto flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-3 rounded-lg text-sm font-medium transition"
-                                                            >
-                                                                View Plant Details
-                                                                <ArrowRight size={16} />
-                                                            </button>
-                                                        )}
-
-                                                    </div>
-
-                                                    {/* Uses */}
-                                                    <div className="border border-gray-100 rounded-xl p-4 sm:p-5">
-
-                                                        <h3 className="font-bold text-[#20372a] text-lg mb-4">
-                                                            Uses
-                                                        </h3>
-
-                                                        {plant.uses?.length > 0 ? (
-                                                            <ul className="space-y-3">
-                                                                {plant.uses.map((use, index) => (
-                                                                    <li
-                                                                        key={index}
-                                                                        className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed"
-                                                                    >
-                                                                        <span className="mt-1.5 w-2 h-2 rounded-full bg-green-600 shrink-0" />
-                                                                        {use}
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        ) : (
-                                                            <p className="text-sm text-gray-500">
-                                                                Uses information is currently unavailable.
-                                                            </p>
-                                                        )}
-
-                                                    </div>
-
-                                                    {/* Benefits */}
-                                                    <div className="border border-gray-100 rounded-xl p-4 sm:p-5">
-
-                                                        <h3 className="font-bold text-[#20372a] text-lg mb-4">
-                                                            Benefits
-                                                        </h3>
-
-                                                        {plant.benefits?.length > 0 ? (
-                                                            <ul className="space-y-3">
-                                                                {plant.benefits.map((benefit, index) => (
-                                                                    <li
-                                                                        key={index}
-                                                                        className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed"
-                                                                    >
-                                                                        <span className="mt-1.5 w-2 h-2 rounded-full bg-green-600 shrink-0" />
-                                                                        {benefit}
-                                                                    </li>
-                                                                ))}
-                                                            </ul>
-                                                        ) : (
-                                                            <p className="text-sm text-gray-500">
-                                                                Benefits information is currently unavailable.
-                                                            </p>
-                                                        )}
-
-                                                    </div>
-
-                                                    <p className="text-xs text-gray-400 leading-relaxed">
-                                                        Plant identification is AI-assisted and may not always be accurate. Verify the plant before using it for consumption or medicinal purposes.
-                                                    </p>
-
-                                                </div>
-                                            )
-                                        })()}
-                                    </>
-                                ) : (
-                                    <p className="text-sm text-gray-500">
-                                        No identification results were returned. Try another image.
-                                    </p>
-                                )}
-
-                                {/* Alternative Predictions */}
-                                <h3 className="font-semibold text-[#20372a] mb-4">
-                                    Other Possible Matches
-                                </h3>
-
-                                <div className="space-y-3">
-
-                                    {identification.results.slice(1).map((result, index) => {
-                                        const matchedPlant = findGardenPlant(result)
-
-                                        return (
-                                            <div
-                                                key={`${result.scientificName}-${index}`}
-                                                className="border border-gray-100 rounded-xl p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 min-w-0"
-                                            >
-
-                                                <div className="min-w-0">
-                                                    <p className="font-medium text-[#20372a] text-sm break-words">
-                                                        {result.scientificName}
-                                                    </p>
-
-                                                    <p className="text-xs text-gray-500 mt-1 break-words">
-                                                        {result.commonNames?.join(', ') || result.family}
-                                                    </p>
-                                                </div>
-
-                                                <div className="flex items-center gap-3 shrink-0">
-                                                    <span className="text-xs font-semibold text-green-700">
-                                                        {(result.confidence * 100).toFixed(2)}%
+                                                    <span className="text-xs font-semibold text-green-800 uppercase tracking-wide">
+                                                        Plant Identified
                                                     </span>
-
-                                                    {matchedPlant && (
-                                                        <button
-                                                            onClick={() => setSelectedPlant(matchedPlant)}
-                                                            className="text-xs font-medium text-green-700 hover:text-green-900"
-                                                        >
-                                                            View Details
-                                                        </button>
-                                                    )}
                                                 </div>
+
+                                                <h3 className="text-xl sm:text-2xl font-bold text-[#20372a] break-words">
+                                                    {plant.name}
+                                                </h3>
+
+                                                <p className="text-sm text-gray-500 italic mt-2 break-words">
+                                                    {plant.scientificName}
+                                                </p>
+
+                                                {plant.description && (
+                                                    <p className="text-sm text-gray-600 leading-relaxed mt-4">
+                                                        {plant.description}
+                                                    </p>
+                                                )}
+
+                                                {matchedPlant && (
+                                                    <button
+                                                        onClick={() => setSelectedPlant(matchedPlant)}
+                                                        className="mt-5 w-full sm:w-auto flex items-center justify-center gap-2 bg-green-700 hover:bg-green-800 text-white px-4 py-3 rounded-lg text-sm font-medium transition"
+                                                    >
+                                                        View Plant Details
+                                                        <ArrowRight size={16} />
+                                                    </button>
+                                                )}
 
                                             </div>
-                                        )
-                                    })}
 
-                                </div>
-                            </>
+                                            {/* Uses */}
+                                            <div className="border border-gray-100 rounded-xl p-4 sm:p-5">
+
+                                                <h3 className="font-bold text-[#20372a] text-lg mb-4">
+                                                    Uses
+                                                </h3>
+
+                                                {plant.uses?.length > 0 ? (
+                                                    <ul className="space-y-3">
+                                                        {plant.uses.map((use, index) => (
+                                                            <li
+                                                                key={index}
+                                                                className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed"
+                                                            >
+                                                                <span className="mt-1.5 w-2 h-2 rounded-full bg-green-600 shrink-0" />
+                                                                {use}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                ) : (
+                                                    <p className="text-sm text-gray-500">
+                                                        Uses information is currently unavailable.
+                                                    </p>
+                                                )}
+
+                                            </div>
+
+                                            {/* Benefits */}
+                                            <div className="border border-gray-100 rounded-xl p-4 sm:p-5">
+
+                                                <h3 className="font-bold text-[#20372a] text-lg mb-4">
+                                                    Benefits
+                                                </h3>
+
+                                                {plant.benefits?.length > 0 ? (
+                                                    <ul className="space-y-3">
+                                                        {plant.benefits.map((benefit, index) => (
+                                                            <li
+                                                                key={index}
+                                                                className="flex items-start gap-3 text-sm text-gray-600 leading-relaxed"
+                                                            >
+                                                                <span className="mt-1.5 w-2 h-2 rounded-full bg-green-600 shrink-0" />
+                                                                {benefit}
+                                                            </li>
+                                                        ))}
+                                                    </ul>
+                                                ) : (
+                                                    <p className="text-sm text-gray-500">
+                                                        Benefits information is currently unavailable.
+                                                    </p>
+                                                )}
+
+                                            </div>
+
+                                            {/* Disclaimer */}
+                                            <p className="text-xs text-gray-400 leading-relaxed">
+                                                Plant identification is AI-assisted and may not always be accurate. Verify the plant before using it for consumption or medicinal purposes.
+                                            </p>
+                                        </>
+                                    )
+                                })()}
+
+                            </div>
                         ) : (
                             <p className="text-sm text-gray-500">
-                                No identification results were returned. Try another image.
+                                No plant information was returned. Please try another image.
                             </p>
                         )}
 
+                        {/* Clear Results */}
                         <button
                             onClick={() => {
                                 setIdentification(null)
@@ -527,6 +477,7 @@ const MyGarden = () => {
 
                     </div>
                 )}
+
 
                 {/* Plant Collection */}
                 <div className="mb-10">
